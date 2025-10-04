@@ -67,12 +67,18 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    console.log('Response received, ID:', data.id);
+    console.log('Full OpenAI response:', JSON.stringify(data, null, 2));
+    console.log('Response ID:', data.id);
+    console.log('Output text:', data.output_text);
+    console.log('Output:', data.output);
+
+    // Handle different possible response formats
+    const outputText = data.output_text || data.output?.[0]?.content || data.text || '';
 
     return new Response(
       JSON.stringify({
         responseId: data.id,
-        outputText: data.output_text
+        outputText: outputText
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
