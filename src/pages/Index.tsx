@@ -72,9 +72,9 @@ const Index = () => {
             </div>
             <div>
               <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary-glow bg-clip-text text-transparent">
-                Gluten-Free Recipe Assistant
+                Baker's Buddy
               </h1>
-              <p className="text-sm text-muted-foreground">Your helpful cooking companion</p>
+              <p className="text-sm text-foreground/70 font-medium">Your gluten-free baking companion</p>
             </div>
           </div>
         </div>

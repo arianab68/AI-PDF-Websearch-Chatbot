@@ -22,12 +22,15 @@ export const ChatMessage = ({ role, content, isStreaming }: ChatMessageProps) =>
         className={cn(
           "max-w-[80%] rounded-3xl px-6 py-5 shadow-soft transition-all duration-300",
           isUser
-            ? "bg-gradient-to-br from-primary via-accent to-primary-glow text-primary-foreground"
-            : "bg-card border border-border text-card-foreground"
+            ? "bg-gradient-to-br from-primary via-accent to-primary-glow text-white"
+            : "bg-white border-2 border-border text-foreground"
         )}
       >
         <div className="flex items-start gap-3">
-          <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-background/20 to-background/10 flex items-center justify-center text-lg shadow-sm">
+          <div className={cn(
+            "flex-shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-lg shadow-sm",
+            isUser ? "bg-white/20" : "bg-gradient-to-br from-primary/10 to-accent/10"
+          )}>
             {isUser ? "👨‍🍳" : "🌾"}
           </div>
           <div className="flex-1 pt-1">
@@ -35,7 +38,7 @@ export const ChatMessage = ({ role, content, isStreaming }: ChatMessageProps) =>
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
                 components={{
-                  a: (props) => <a className="underline underline-offset-4 text-primary" {...props} />,
+                  a: (props) => <a className={cn("underline underline-offset-4", isUser ? "text-white" : "text-primary")} {...props} />,
                   code: (props) => {
                     const { children, className, ...rest } = props as any;
                     const isMultiline = String(children).includes("\n");
