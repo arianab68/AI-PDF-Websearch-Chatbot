@@ -68,12 +68,24 @@ serve(async (req) => {
 
     const data = await response.json();
     console.log('Full OpenAI response:', JSON.stringify(data, null, 2));
-    console.log('Response ID:', data.id);
-    console.log('Output text:', data.output_text);
-    console.log('Output:', data.output);
 
-    // Handle different possible response formats
-    const outputText = data.output_text || data.output?.[0]?.content || data.text || '';
+    // Extract the text from the nested response structure
+    // The output is an array with content objects that have a text field
+    let outputText = '';
+    
+    if (data.output && Array.isArray(data.output)) {
+      // Get the first output item's content
+      const firstOutput = data.output[0];
+      if (firstOutput && Array.isArray(firstOutput.content)) {
+        // Get the text from the first content item
+        const firstContent = firstOutput.content[0];
+        if (firstContent && typeof firstContent === 'object' && firstContent.text) {
+          outputText = firstContent.text;
+        }
+      }
+    }
+
+    console.log('Extracted text:', outputText);
 
     return new Response(
       JSON.stringify({
