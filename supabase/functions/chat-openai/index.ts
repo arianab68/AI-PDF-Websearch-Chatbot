@@ -7,7 +7,7 @@ const corsHeaders = {
 };
 
 const PROMPT_ID = "pmpt_68e1a38df6c88196ad95378637b453780eeb471199c1276b";
-const PROMPT_VERSION = "2";
+const PROMPT_VERSION = "3";
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
