@@ -1,3 +1,5 @@
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/utils";
 
 interface ChatMessageProps {
@@ -29,12 +31,47 @@ export const ChatMessage = ({ role, content, isStreaming }: ChatMessageProps) =>
             {isUser ? "👤" : "🤖"}
           </div>
           <div className="flex-1 pt-1">
-            <p className="text-sm leading-relaxed whitespace-pre-wrap">
-              {content}
+            <div className="text-sm leading-relaxed">
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                components={{
+                  a: (props) => <a className="underline underline-offset-4 text-primary" {...props} />,
+                  code: (props) => {
+                    const { children, className, ...rest } = props as any;
+                    const isMultiline = String(children).includes("\n");
+                    const isBlock = (typeof className === "string" && className.includes("language-")) || isMultiline;
+                    return isBlock ? (
+                      <pre className="my-3 overflow-x-auto rounded-lg border border-border bg-muted p-3">
+                        <code className={cn("font-mono text-sm", className)} {...rest}>{children}</code>
+                      </pre>
+                    ) : (
+                      <code className="rounded bg-muted px-1 py-0.5 font-mono text-sm" {...rest}>{children}</code>
+                    );
+                  },
+                  p: ({ node, ...props }) => <p className="mb-3 last:mb-0" {...props} />,
+                  ul: ({ node, ...props }) => <ul className="list-disc pl-6 mb-3 space-y-1" {...props} />,
+                  ol: ({ node, ...props }) => <ol className="list-decimal pl-6 mb-3 space-y-1" {...props} />,
+                  h1: ({ node, ...props }) => <h1 className="text-xl font-semibold mb-2" {...props} />,
+                  h2: ({ node, ...props }) => <h2 className="text-lg font-semibold mb-2" {...props} />,
+                  h3: ({ node, ...props }) => <h3 className="text-base font-semibold mb-2" {...props} />,
+                  blockquote: ({ node, ...props }) => (
+                    <blockquote className="border-l-2 border-border pl-3 italic text-muted-foreground mb-3" {...props} />
+                  ),
+                  table: ({ node, ...props }) => (
+                    <div className="my-3 overflow-x-auto">
+                      <table className="w-full text-sm border border-border" {...props} />
+                    </div>
+                  ),
+                  th: ({ node, ...props }) => <th className="border border-border bg-muted px-2 py-1 text-left" {...props} />,
+                  td: ({ node, ...props }) => <td className="border border-border px-2 py-1 align-top" {...props} />,
+                }}
+              >
+                {content}
+              </ReactMarkdown>
               {isStreaming && (
                 <span className="inline-block w-2 h-4 ml-1 bg-current animate-pulse" />
               )}
-            </p>
+            </div>
           </div>
         </div>
       </div>
