@@ -69,20 +69,28 @@ serve(async (req) => {
     const data = await response.json();
     console.log('Full OpenAI response:', JSON.stringify(data, null, 2));
 
-    // Extract the text from the nested response structure
-    // The output is an array with content objects that have a text field
+    // Extract assistant text from the first message-type output item
     let outputText = '';
-    
     if (data.output && Array.isArray(data.output)) {
-      // Get the first output item's content
-      const firstOutput = data.output[0];
-      if (firstOutput && Array.isArray(firstOutput.content)) {
-        // Get the text from the first content item
-        const firstContent = firstOutput.content[0];
-        if (firstContent && typeof firstContent === 'object' && firstContent.text) {
-          outputText = firstContent.text;
-        }
+      const messageItem = data.output.find((item: any) => item?.type === 'message' && Array.isArray(item.content));
+      if (messageItem) {
+        const parts = messageItem.content as any[];
+        const texts = parts
+          .filter((p) => p && (p.type === 'output_text' || typeof p.text !== 'undefined'))
+          .map((p) => {
+            const t = p.text;
+            if (typeof t === 'string') return t;
+            if (t && typeof t.value === 'string') return t.value;
+            return '';
+          })
+          .filter(Boolean);
+        outputText = texts.join('\n').trim();
       }
+    }
+
+    // Fallback to output_text if provided directly by the API/SDK
+    if (!outputText && typeof data.output_text === 'string') {
+      outputText = data.output_text;
     }
 
     console.log('Extracted text:', outputText);
@@ -90,7 +98,7 @@ serve(async (req) => {
     return new Response(
       JSON.stringify({
         responseId: data.id,
-        outputText: outputText
+        outputText
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
