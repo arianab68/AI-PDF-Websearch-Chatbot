@@ -62,19 +62,19 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-secondary to-background flex flex-col">
+    <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <header className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-10 shadow-soft">
+      <header className="border-b border-border bg-card backdrop-blur-md sticky top-0 z-10 shadow-soft">
         <div className="container mx-auto px-4 py-6">
           <div className="flex items-center gap-4">
-            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-glow">
+            <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center shadow-glow">
               <span className="text-3xl">🌾</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary-glow bg-clip-text text-transparent">
-                Baker's Buddy
+              <h1 className="text-2xl font-bold text-primary">
+                Gluten-Free Recipe Assistant
               </h1>
-              <p className="text-sm text-foreground/70 font-medium">Your gluten-free baking companion</p>
+              <p className="text-sm text-foreground/70 font-medium">Your helpful cooking companion</p>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@ const Index = () => {
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center space-y-6 animate-fade-in">
-                <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-primary/10 via-accent/10 to-primary-glow/10 flex items-center justify-center mx-auto shadow-soft">
+                <div className="w-24 h-24 rounded-3xl bg-secondary flex items-center justify-center mx-auto shadow-soft">
                   <span className="text-5xl">🥖</span>
                 </div>
                 <div className="max-w-md">
@@ -120,7 +120,7 @@ const Index = () => {
         </div>
 
         {/* Input */}
-        <div className="bg-card/90 backdrop-blur-md rounded-3xl p-5 border border-border shadow-glow">
+        <div className="bg-card backdrop-blur-md rounded-3xl p-5 border border-border shadow-glow">
           <ChatInput onSend={handleSendMessage} disabled={isLoading} />
         </div>
       </div>

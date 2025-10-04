@@ -39,7 +39,7 @@ export const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
         onClick={handleSend}
         disabled={disabled || !message.trim()}
         size="lg"
-        className="h-[60px] px-8 bg-gradient-to-br from-primary via-accent to-primary-glow hover:shadow-glow hover:scale-105 transition-all duration-300 rounded-2xl"
+        className="h-[60px] px-8 bg-primary hover:bg-primary/90 hover:shadow-glow hover:scale-105 transition-all duration-300 rounded-2xl"
       >
         <Send className="h-5 w-5" />
       </Button>

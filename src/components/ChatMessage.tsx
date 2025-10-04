@@ -22,14 +22,14 @@ export const ChatMessage = ({ role, content, isStreaming }: ChatMessageProps) =>
         className={cn(
           "max-w-[80%] rounded-3xl px-6 py-5 shadow-soft transition-all duration-300",
           isUser
-            ? "bg-gradient-to-br from-primary via-accent to-primary-glow text-white"
+            ? "bg-primary text-white"
             : "bg-white border-2 border-border text-foreground"
         )}
       >
         <div className="flex items-start gap-3">
           <div className={cn(
             "flex-shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center text-lg shadow-sm",
-            isUser ? "bg-white/20" : "bg-gradient-to-br from-primary/10 to-accent/10"
+            isUser ? "bg-white/20" : "bg-secondary"
           )}>
             {isUser ? "👨‍🍳" : "🌾"}
           </div>
