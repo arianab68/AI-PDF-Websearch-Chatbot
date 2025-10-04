@@ -26,20 +26,20 @@ export const ChatInput = ({ onSend, disabled }: ChatInputProps) => {
   };
 
   return (
-    <div className="flex gap-3 items-end">
+    <div className="flex gap-4 items-end">
       <Textarea
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={handleKeyDown}
-        placeholder="Type your message..."
+        placeholder="Ask about recipes, ingredients, or cooking tips..."
         disabled={disabled}
-        className="min-h-[60px] max-h-[200px] resize-none bg-card border-border focus:border-primary transition-colors"
+        className="min-h-[60px] max-h-[200px] resize-none bg-input border-border focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all rounded-2xl"
       />
       <Button
         onClick={handleSend}
         disabled={disabled || !message.trim()}
         size="lg"
-        className="h-[60px] px-6 bg-gradient-to-br from-primary to-primary-glow hover:shadow-glow transition-all duration-300"
+        className="h-[60px] px-8 bg-gradient-to-br from-primary via-accent to-primary-glow hover:shadow-glow hover:scale-105 transition-all duration-300 rounded-2xl"
       >
         <Send className="h-5 w-5" />
       </Button>

@@ -20,15 +20,15 @@ export const ChatMessage = ({ role, content, isStreaming }: ChatMessageProps) =>
     >
       <div
         className={cn(
-          "max-w-[80%] rounded-2xl px-6 py-4 shadow-card transition-all duration-300",
+          "max-w-[80%] rounded-3xl px-6 py-5 shadow-soft transition-all duration-300",
           isUser
-            ? "bg-gradient-to-br from-primary to-primary-glow text-primary-foreground"
+            ? "bg-gradient-to-br from-primary via-accent to-primary-glow text-primary-foreground"
             : "bg-card border border-border text-card-foreground"
         )}
       >
         <div className="flex items-start gap-3">
-          <div className="flex-shrink-0 w-8 h-8 rounded-full bg-secondary/50 flex items-center justify-center">
-            {isUser ? "👤" : "🤖"}
+          <div className="flex-shrink-0 w-10 h-10 rounded-2xl bg-gradient-to-br from-background/20 to-background/10 flex items-center justify-center text-lg shadow-sm">
+            {isUser ? "👨‍🍳" : "🌾"}
           </div>
           <div className="flex-1 pt-1">
             <div className="text-sm leading-relaxed">

@@ -62,19 +62,19 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-background via-secondary to-background flex flex-col">
       {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+      <header className="border-b border-border bg-card/80 backdrop-blur-md sticky top-0 z-10 shadow-soft">
         <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-glow">
-              <span className="text-2xl">🤖</span>
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-primary-glow flex items-center justify-center shadow-glow">
+              <span className="text-3xl">🌾</span>
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-primary-glow bg-clip-text text-transparent">
-                AI Assistant
+              <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-primary-glow bg-clip-text text-transparent">
+                Gluten-Free Recipe Assistant
               </h1>
-              <p className="text-sm text-muted-foreground">Powered by OpenAI</p>
+              <p className="text-sm text-muted-foreground">Your helpful cooking companion</p>
             </div>
           </div>
         </div>
@@ -86,17 +86,16 @@ const Index = () => {
         <div className="flex-1 overflow-y-auto mb-6 space-y-4">
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
-              <div className="text-center space-y-4 animate-fade-in">
-                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-primary-glow/20 flex items-center justify-center mx-auto">
-                  <span className="text-4xl">💬</span>
+              <div className="text-center space-y-6 animate-fade-in">
+                <div className="w-24 h-24 rounded-3xl bg-gradient-to-br from-primary/10 via-accent/10 to-primary-glow/10 flex items-center justify-center mx-auto shadow-soft">
+                  <span className="text-5xl">🥖</span>
                 </div>
-                <div>
-                  <h2 className="text-xl font-semibold text-foreground mb-2">
-                    Start a conversation
+                <div className="max-w-md">
+                  <h2 className="text-2xl font-bold text-foreground mb-3">
+                    Welcome to Your Gluten-Free Kitchen!
                   </h2>
-                  <p className="text-muted-foreground max-w-md">
-                    Ask me anything! I'm here to help answer your questions and have a
-                    conversation.
+                  <p className="text-muted-foreground leading-relaxed">
+                    Ask me for recipes, baking tips, ingredient substitutions, or anything about gluten-free cooking. Let's create something delicious together!
                   </p>
                 </div>
               </div>
@@ -121,7 +120,7 @@ const Index = () => {
         </div>
 
         {/* Input */}
-        <div className="bg-card/50 backdrop-blur-sm rounded-2xl p-4 border border-border shadow-card">
+        <div className="bg-card/90 backdrop-blur-md rounded-3xl p-5 border border-border shadow-glow">
           <ChatInput onSend={handleSendMessage} disabled={isLoading} />
         </div>
       </div>
