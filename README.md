@@ -1,6 +1,6 @@
-# 🧠 Build a Chatbot That Can Search PDFs, Browse the Web, or Use MCP
+# 🧠 Chatbot That Can Search PDFs and Browse the Web
 **Exercise from [Product Compass](https://www.productcompass.pm/i/173159715/exercise-build-a-chatbot-that-can-search-pdfs-browse-web-or-use-mcp-replit-and-responses-api)**  
-Built using **Replit** + **OpenAI Responses API**
+Built using **Lovable** + **OpenAI Responses API**
 
 ---
 
@@ -19,4 +19,3 @@ It’s designed to showcase real-world applications of the **OpenAI Responses AP
 - **Prompts** – reusable, versioned prompt templates stored in the OpenAI Platform  
 - **File Search (RAG)** – retrieve knowledge from uploaded PDFs with citations  
 - **Web Search** – fetch and ground responses in real-time web data  
-- **MCP Tools** – integrate external data so
