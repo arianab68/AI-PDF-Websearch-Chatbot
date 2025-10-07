@@ -9,6 +9,39 @@ const corsHeaders = {
 const PROMPT_ID = "pmpt_68e1a38df6c88196ad95378637b453780eeb471199c1276b";
 const PROMPT_VERSION = "3";
 
+async function logToPromptLayer(
+  requestPayload: any,
+  responseData: any,
+  startTime: number,
+  endTime: number,
+  error?: string
+) {
+  const promptLayerKey = Deno.env.get('PROMPTLAYER_API_KEY');
+  if (!promptLayerKey) return;
+
+  try {
+    await fetch('https://api.promptlayer.com/track-request', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        function_name: 'openai.responses.create',
+        provider_type: 'openai',
+        args: [],
+        kwargs: requestPayload,
+        request_response: responseData,
+        request_start_time: startTime,
+        request_end_time: endTime,
+        api_key: promptLayerKey,
+        ...(error && { error }),
+      }),
+    });
+  } catch (e) {
+    console.error('Failed to log to PromptLayer:', e);
+  }
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -51,23 +84,47 @@ serve(async (req) => {
 
     console.log('Calling OpenAI Responses API with prompt ID:', PROMPT_ID);
     
-    const response = await fetch('https://api.openai.com/v1/responses', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${openAIApiKey}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(requestBody),
-    });
+    const startTime = Date.now();
+    let data: any;
+    let responseError: string | undefined;
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('OpenAI API error:', response.status, errorText);
-      throw new Error(`OpenAI API error: ${response.status} - ${errorText}`);
+    try {
+      const response = await fetch('https://api.openai.com/v1/responses', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${openAIApiKey}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      const endTime = Date.now();
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        responseError = `${response.status} - ${errorText}`;
+        console.error('OpenAI API error:', responseError);
+        
+        // Log error to PromptLayer
+        await logToPromptLayer(requestBody, null, startTime, endTime, responseError);
+        
+        throw new Error(`OpenAI API error: ${responseError}`);
+      }
+
+      data = await response.json();
+      console.log('Full OpenAI response:', JSON.stringify(data, null, 2));
+
+      // Log successful request to PromptLayer
+      await logToPromptLayer(requestBody, data, startTime, endTime);
+    } catch (fetchError) {
+      const endTime = Date.now();
+      responseError = fetchError instanceof Error ? fetchError.message : 'Unknown error';
+      
+      // Log error to PromptLayer
+      await logToPromptLayer(requestBody, null, startTime, endTime, responseError);
+      
+      throw fetchError;
     }
-
-    const data = await response.json();
-    console.log('Full OpenAI response:', JSON.stringify(data, null, 2));
 
     // Extract assistant text from the first message-type output item
     let outputText = '';
