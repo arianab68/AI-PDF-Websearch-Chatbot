@@ -1,5 +1,4 @@
 # 🧠 Chatbot That Can Search PDFs and Browse the Web
-**Exercise from [Product Compass](https://www.productcompass.pm/i/173159715/exercise-build-a-chatbot-that-can-search-pdfs-browse-web-or-use-mcp-replit-and-responses-api)**  
 Built using **Lovable** + **OpenAI Responses API**
 
 ---
